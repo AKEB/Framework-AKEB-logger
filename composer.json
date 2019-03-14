@@ -15,7 +15,10 @@
 	"license": "BSD",
 	"name": "AKEB/Logger",
 	"support": {
-		"source": "https://github.com/AKEB/Logger"
+		"email": "babadzhanyan@corp.mail.ru",
+		"issues": "https://git.terrhq.ru/v.babajanyan/Logger/issues",
+		"wiki": "https://git.terrhq.ru/v.babajanyan/Logger/wiki/",
+		"source": "https://git.terrhq.ru/v.babajanyan/Logger"
 	},
 	"type": "library",
 	"require": {
