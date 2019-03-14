@@ -1,3 +1,2 @@
 # Logger
-
-composer project AKEB\Logger
+composer project AKEB/Logger

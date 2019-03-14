@@ -1,0 +1,25 @@
+{
+	"authors": [
+		{
+			"email": "babadzhanyan@corp.mail.ru",
+			"name": "Vadim Babajanyan",
+			"role": "Lead"
+		}
+	],
+	"autoload": {
+		"classmap": [
+			"./src/"
+		]
+	},
+	"description": "",
+	"license": "BSD",
+	"name": "AKEB/Logger",
+	"support": {
+		"source": "https://github.com/AKEB/Logger"
+	},
+	"type": "library",
+	"require": {
+		"php": "^5.4|^7.0",
+		"psr/log": "^1.1"
+	}
+}
