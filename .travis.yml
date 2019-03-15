@@ -7,7 +7,7 @@ php:
 before_install:
   - curl -s http://getcomposer.org/installer | php
   - if [ -n "$GH_TOKEN" ]; then composer config github-oauth.github.com ${GH_TOKEN}; fi;
-  - php composer.phar install --prefer-source --no-interaction -vvv
+  - php composer.phar install --prefer-source --no-interaction
   - phpenv rehash
 
 script:
