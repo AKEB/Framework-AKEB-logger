@@ -1,12 +1,12 @@
 # Logger
 
-composer project AKEB/Logger
+composer project akeb/logger
 
 Composer config
 ```
 {
 	"require": {
-		"AKEB/Logger": "^1.0.0"
+		"akeb/logger": "^1.0.0"
 	},
 	"repositories": [
 		{
@@ -22,7 +22,7 @@ or
 ```
 {
 	"require": {
-		"AKEB/Logger": "^1.0.0"
+		"akeb/logger": "^1.0.0"
 	},
 	"repositories": [
 		{
