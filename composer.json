@@ -22,7 +22,7 @@
 	},
 	"type": "library",
 	"require": {
-		"php": "^5.4|^7.1",
+		"php": "^5.4|^7.0",
 		"psr/log": "^1.1",
 		"akeb/services_json": "^1.0.0"
 	},
