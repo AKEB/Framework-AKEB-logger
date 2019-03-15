@@ -35,18 +35,5 @@
 			"type": "vcs",
 			"url": "https://github.com/AKEB/Services_JSON"
 		}
-	],
-	"extra": {
-		"asset-vcs-driver-options": {
-			"github-no-api": true
-		 }
-	},
-	"config": {
-		"fxp-asset": {
-			"vcs-driver-options": {
-				"github-no-api": true
-			},
-			"pattern-skip-version": "(-build|-patch)"
-		}
-	 }
+	]
 }
