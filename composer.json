@@ -13,7 +13,7 @@
 	},
 	"description": "",
 	"license": "BSD",
-	"name": "AKEB/Logger",
+	"name": "akeb/logger",
 	"support": {
 		"email": "babadzhanyan@corp.mail.ru",
 		"issues": "https://git.terrhq.ru/v.babajanyan/Logger/issues",
@@ -24,7 +24,7 @@
 	"require": {
 		"php": "^5.4|^7.0",
 		"psr/log": "^1.1",
-		"AKEB/services_json": "^1.0.0"
+		"akeb/services_json": "^1.0.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^5.7",
