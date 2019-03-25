@@ -61,6 +61,7 @@ class GzipRoute extends \AKEB\Logger\Route {
 			'{date}' => date("Y-m-d H:i:s"),
 			'{time}' => time(),
 			'{ip}' => $this->clientIP(),
+			'{level}' => $level,
 			'{message}' => $message,
 			'{context}' => implode(' || ', $context),
 		])) . PHP_EOL);
