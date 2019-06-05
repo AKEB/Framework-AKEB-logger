@@ -20,7 +20,10 @@ class FileRoute extends \AKEB\Logger\Route {
 	public function __construct(array $attributes = []) {
 		parent::__construct($attributes);
 
-		if (!file_exists($this->filePath)) {
+		$dirName = dirname($this->filePath);
+		$have_file = @file_exists($this->filePath);
+		if (!$have_file) {
+			@mkdir($dirName,0775,true);
 			touch($this->filePath);
 		}
 	}
