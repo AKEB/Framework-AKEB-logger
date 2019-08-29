@@ -36,7 +36,7 @@ class FileRoute extends \AKEB\Logger\Route {
 			'{date}' => $this->getDate(),
 			'{level}' => $level,
 			'{message}' => $message,
-			'{context}' => $this->contextStringify($context),
+			'{context}' => implode(' || ', $context),
 		])) . PHP_EOL, FILE_APPEND);
 	}
 }
