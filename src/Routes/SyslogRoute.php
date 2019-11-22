@@ -16,18 +16,7 @@ class SyslogRoute extends \AKEB\Logger\Route {
 	/**
 	 * @var string Шаблон сообщения
 	 */
-	public $template = "{date} {level} {message} {context}";
-
-	public $type_hash = [
-		'emergency' => LOG_EMERG, // system is unusable
-		'alert' => LOG_ALERT, // action must be taken immediately
-		'critical' => LOG_CRIT, // critical conditions
-		'error' => LOG_ERR, // error conditions
-		'warning' => LOG_WARNING, // warning conditions
-		'notice' => LOG_NOTICE, // normal, but significant, condition
-		'info' => LOG_INFO, // informational message
-		'debug' => LOG_DEBUG, // debug-level message
-	];
+	public $template = "{date} || {time} || {ip} || {message} || {context}";
 
 	/**
 	 * @inheritdoc
@@ -41,24 +30,14 @@ class SyslogRoute extends \AKEB\Logger\Route {
 		closelog();
 	}
 
-	private function clientIP() {
-		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$remote_addrs = explode(',',$_SERVER['HTTP_X_FORWARDED_FOR']);
-			$remote_addr = trim(end($remote_addrs));
-		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
-			$remote_addr = trim($_SERVER['REMOTE_ADDR']);
-		} else {
-			$remote_addr = '';
-		}
-		if (!$remote_addr) $remote_addr = 'undefined';
-		return $remote_addr;
-	}
-
 	/**
 	 * @inheritdoc
 	 */
 	public function log($level, $message, array $context = []) {
-		syslog($this->type_hash[$level], $this->filePath . '| ' . trim(strtr($this->template, [
+		$level = $this->resolveLevel($level);
+		if ($level === null) return;
+
+		syslog($level, $this->filePath . '| ' . trim(strtr($this->template, [
 			'{date}' => $this->getDate(),
 			'{time}' => time(),
 			'{ip}' => $this->clientIP(),
@@ -66,5 +45,27 @@ class SyslogRoute extends \AKEB\Logger\Route {
 			'{message}' => $message,
 			'{context}' => implode(' || ', $context),
 		])));
+	}
+
+	/**
+	 * Преобразование уровня логов в формат подходящий для syslog()
+	 *
+	 * @see http://php.net/manual/en/function.syslog.php
+	 * @param $level
+	 * @return string
+	 */
+	private function resolveLevel($level)
+	{
+		$map = [
+			\Psr\Log\LogLevel::EMERGENCY => LOG_EMERG,
+			\Psr\Log\LogLevel::ALERT     => LOG_ALERT,
+			\Psr\Log\LogLevel::CRITICAL  => LOG_CRIT,
+			\Psr\Log\LogLevel::ERROR     => LOG_ERR,
+			\Psr\Log\LogLevel::WARNING   => LOG_WARNING,
+			\Psr\Log\LogLevel::NOTICE    => LOG_NOTICE,
+			\Psr\Log\LogLevel::INFO      => LOG_INFO,
+			\Psr\Log\LogLevel::DEBUG     => LOG_DEBUG,
+		];
+		return isset($map[$level]) ? $map[$level] : null;
 	}
 }

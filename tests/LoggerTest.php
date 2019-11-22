@@ -57,6 +57,7 @@ class LoggerTest extends PHPUnit\Framework\TestCase {
 			'isEnable' => true,
 			'filePath' => $this->dirname.'/test1.txt',
 		]));
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = '127.0.0.6';
 		$this->logger->info("Info");
 		$this->logger->routes->attach(new FileRoute([
 			'isEnable' => true,
@@ -81,7 +82,7 @@ class LoggerTest extends PHPUnit\Framework\TestCase {
 		$this->logger->error("ErrorText new");
 		$fileRoute = new FileRoute();
 		$date = $fileRoute->getDate();
-		$testString = $date." error ErrorText new\n";
+		$testString = $date." || ".time()." || 127.0.0.6 || ErrorText new ||\n";
 		$this->assertStringEqualsFile($this->dirname.'/test4.txt', $testString);
 	}
 
@@ -105,5 +106,38 @@ class LoggerTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals($data[1],date("Y-m-d H:i:s")." || ".time()." || 127.0.0.2 || Error Text ||\n");
 		$this->assertEquals($data[2],date("Y-m-d H:i:s")." || ".time()." || undefined || Warning Text ||\n");
 
+	}
+
+	function test_Logger_sqlite() {
+		copy('tests/default.sqlite','tests/test_'.getmypid().'.sqlite');
+		$this->logger->routes->attach(new \AKEB\Logger\Routes\DatabaseRoute([
+			'isEnable' => true,
+			'dsn' => 'sqlite:tests/test_'.getmypid().'.sqlite',
+			'table' => 'default_log',
+		]));
+		$_SERVER['HTTP_X_FORWARDED_FOR'] = '127.0.0.1';
+		$text = 'Info message '.getmypid();
+		$context = ['pid' => getmypid()];
+		$this->logger->info($text,$context);
+
+		$connection = new PDO('sqlite:tests/test_'.getmypid().'.sqlite');
+		$sql = "SELECT * FROM `default_log`;";
+		$rows = $connection->query($sql, PDO::FETCH_ASSOC);
+		$rows = $rows->fetchAll();
+		$this->assertCount(1, $rows);
+		$this->assertCount(7, $rows[0]);
+		$this->assertEquals($rows[0]['level'], 'info');
+		$this->assertEquals($rows[0]['message'], $text);
+		$this->assertEquals($rows[0]['context'], json_encode($context));
+
+		$this->logger->warning($text,$context);
+
+		$sql = "SELECT * FROM `default_log`;";
+		$rows = $connection->query($sql, PDO::FETCH_ASSOC);
+		$rows = $rows->fetchAll();
+		$this->assertCount(2, $rows);
+		$this->assertCount(7, $rows[1]);
+		$this->assertEquals($rows[1]['level'], 'warning');
+		unlink('tests/test_'.getmypid().'.sqlite');
 	}
 }

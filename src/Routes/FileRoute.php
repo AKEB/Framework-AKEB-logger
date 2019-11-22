@@ -12,7 +12,7 @@ class FileRoute extends \AKEB\Logger\Route {
 	/**
 	 * @var string Шаблон сообщения
 	 */
-	public $template = "{date} {level} {message} {context}";
+	public $template = "{date} || {time} || {ip} || {message} || {context}";
 
 	/**
 	 * @inheritdoc
@@ -26,19 +26,6 @@ class FileRoute extends \AKEB\Logger\Route {
 			@mkdir($dirName,0775,true);
 			touch($this->filePath);
 		}
-	}
-
-	private function clientIP() {
-		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$remote_addrs = explode(',',$_SERVER['HTTP_X_FORWARDED_FOR']);
-			$remote_addr = trim(end($remote_addrs));
-		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
-			$remote_addr = trim($_SERVER['REMOTE_ADDR']);
-		} else {
-			$remote_addr = '';
-		}
-		if (!$remote_addr) $remote_addr = 'undefined';
-		return $remote_addr;
 	}
 
 	/**

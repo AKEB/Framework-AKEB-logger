@@ -44,6 +44,19 @@ abstract class Route extends AbstractLogger implements LoggerInterface {
 		return (new DateTime())->format($this->dateFormat);
 	}
 
+	public function clientIP() {
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			$remote_addrs = explode(',',$_SERVER['HTTP_X_FORWARDED_FOR']);
+			$remote_addr = trim(end($remote_addrs));
+		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
+			$remote_addr = trim($_SERVER['REMOTE_ADDR']);
+		} else {
+			$remote_addr = '';
+		}
+		if (!$remote_addr) $remote_addr = 'undefined';
+		return $remote_addr;
+	}
+
 	/**
 	 * Преобразование $context в строку
 	 *
