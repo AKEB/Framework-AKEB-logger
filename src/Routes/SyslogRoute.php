@@ -37,14 +37,20 @@ class SyslogRoute extends \AKEB\Logger\Route {
 		$level = $this->resolveLevel($level);
 		if ($level === null) return;
 
-		syslog($level, $this->filePath . '| ' . trim(strtr($this->template, [
+		$header = $this->filePath . '| ';
+		$text = trim(strtr($this->template, [
 			'{date}' => $this->getDate(),
 			'{time}' => time(),
 			'{ip}' => $this->clientIP(),
 			'{level}' => $level,
 			'{message}' => $message,
 			'{context}' => implode(' || ', $context),
-		])));
+		]));
+		$texts = str_split($text, 8000);
+		foreach($texts as $text) {
+			syslog($level, $header . $text );
+		}
+
 	}
 
 	/**
