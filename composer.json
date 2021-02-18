@@ -12,7 +12,7 @@
 		]
 	},
 	"description": "",
-	"license": "BSD",
+	"license": "Apache-2.0",
 	"name": "akeb/logger",
 	"support": {
 		"email": "babadzhanyan@corp.mail.ru",

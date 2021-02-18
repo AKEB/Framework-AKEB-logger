@@ -1,6 +1,5 @@
 # Logger
 
-
 composer project akeb/logger
 
 Composer config
