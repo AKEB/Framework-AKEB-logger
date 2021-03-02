@@ -23,13 +23,13 @@ class GzipRoute extends \AKEB\Logger\Route {
 		parent::__construct($attributes);
 
 		$dirName = dirname($this->filePath);
-		$have_file = @file_exists($this->filePath);
-		if (!$have_file) {
+		$dir_exists = @file_exists($dirName);
+		if (!$dir_exists) {
 			@mkdir($dirName,0775,true);
 
 		}
 		$this->file = gzopen($this->filePath, 'ab9');
-		if (!$have_file) chmod($this->filePath, 0664);
+		if (!$dir_exists) chmod($this->filePath, 0664);
 	}
 
 	/**
