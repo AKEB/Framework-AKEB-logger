@@ -24,16 +24,12 @@
 	"require": {
 		"php": "^5.4|^7.0",
 		"psr/log": "^1.1",
-		"akeb/services_json": "^1.0.0"
+		"akeb/services_json": "^1.0.5"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^4|^5.7",
 		"phpmd/phpmd": "@stable"
 	},
 	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/AKEB/Services_JSON"
-		}
 	]
 }
