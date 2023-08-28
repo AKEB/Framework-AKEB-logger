@@ -1,44 +1,12 @@
 <?php
 namespace AKEB\Logger\Routes;
 
-/**
- * Class FileRoute
- */
-class FileRoute extends \AKEB\Logger\Route {
-	/**
-	 * @var string Путь к файлу
-	 */
-	public $filePath;
-	/**
-	 * @var string Шаблон сообщения
-	 */
-	public $template = "{date} || {time} || {ip} || {message} || {context}";
+if (version_compare(PHP_VERSION, '8.0', '<')) {
+	class_alias('\AKEB\Logger\Routes\PHP7\FileRoute_PHP', '\AKEB\Logger\Routes\FileRoute_PHP');
+} else {
+	class_alias('\AKEB\Logger\Routes\PHP8\FileRoute_PHP', '\AKEB\Logger\Routes\FileRoute_PHP');
+}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function __construct(array $attributes = []) {
-		parent::__construct($attributes);
+class FileRoute extends \AKEB\Logger\Routes\FileRoute_PHP {
 
-		$dirName = dirname($this->filePath);
-		$have_file = @file_exists($this->filePath);
-		if (!$have_file) {
-			@mkdir($dirName,0775,true);
-			touch($this->filePath);
-		}
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public function log($level, $message, array $context = []) {
-		file_put_contents($this->filePath, trim(strtr($this->template, [
-			'{date}' => $this->getDate(),
-			'{time}' => time(),
-			'{ip}' => $this->clientIP(),
-			'{level}' => $level,
-			'{message}' => $message,
-			'{context}' => implode(' || ', $context),
-		])) . PHP_EOL, FILE_APPEND);
-	}
 }

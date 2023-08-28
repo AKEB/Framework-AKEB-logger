@@ -1,9 +1,6 @@
 <?php
-namespace AKEB\Logger;
 
-use Psr\Log\AbstractLogger;
-use Psr\Log\LoggerInterface;
-use SplObjectStorage;
+namespace AKEB\Logger;
 
 /*
 	$logger = new \AKEB\Logger\Logger();
@@ -23,34 +20,12 @@ use SplObjectStorage;
 	$logger->emergency("Emergency message");
  */
 
-/**
- * Class Logger
- */
-class Logger extends AbstractLogger implements LoggerInterface {
-	/**
-	 * @var SplObjectStorage Список роутов
-	 */
-	public $routes;
+if (version_compare(PHP_VERSION, '8.0', '<')) {
+	class_alias('\AKEB\Logger\PHP7\Logger_PHP', '\AKEB\Logger\Logger_PHP');
+} else {
+	class_alias('\AKEB\Logger\PHP8\Logger_PHP', '\AKEB\Logger\Logger_PHP');
+}
 
-	/**
-	 * Конструктор
-	 */
-	public function __construct() {
-		$this->routes = new SplObjectStorage();
-	}
+class Logger extends \AKEB\Logger\Logger_PHP {
 
-	/**
-	 * @inheritdoc
-	 */
-	public function log($level, $message, array $context = []) {
-		foreach ($this->routes as $route) {
-			if (!$route instanceof Route) {
-				continue;
-			}
-			if (!$route->isEnable) {
-				continue;
-			}
-			$route->log($level, $message, $context);
-		}
-	}
 }

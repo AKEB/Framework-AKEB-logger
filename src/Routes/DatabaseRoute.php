@@ -19,55 +19,12 @@ use PDO;
  * );
  */
 
-class DatabaseRoute extends \AKEB\Logger\Route {
-	/**
-	 * @var string Data Source Name
-	 * @see http://php.net/manual/en/pdo.construct.php
-	 */
-	public $dsn;
-	/**
-	 * @var string Имя пользователя БД
-	 */
-	public $username;
-	/**
-	 * @var string Пароль пользователя БД
-	 */
-	public $password;
-	/**
-	 * @var string Имя таблицы
-	 */
-	public $table;
-	/**
-	 * @var \PDO Подключение к БД
-	 */
-	private $connection;
+if (version_compare(PHP_VERSION, '8.0', '<')) {
+	class_alias('\AKEB\Logger\Routes\PHP7\DatabaseRoute_PHP', '\AKEB\Logger\Routes\DatabaseRoute_PHP');
+} else {
+	class_alias('\AKEB\Logger\Routes\PHP8\DatabaseRoute_PHP', '\AKEB\Logger\Routes\DatabaseRoute_PHP');
+}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function __construct(array $attributes = []) {
-		parent::__construct($attributes);
-		$this->connection = new PDO($this->dsn, $this->username, $this->password);
-	}
+class DatabaseRoute extends \AKEB\Logger\Routes\DatabaseRoute_PHP {
 
-	/**
-	 * @inheritdoc
-	 */
-	public function log($level, $message, array $context = []) {
-		$statement = $this->connection->prepare(
-			'INSERT INTO ' . $this->table . ' (date, time, ip, level, message, context) ' .
-			'VALUES (:date, :time, :ip, :level, :message, :context)'
-		);
-		$date = $this->getDate();
-		$time = time();
-		$ip = $this->clientIP();
-		$cnt = $this->contextStringify($context);
-		$statement->bindParam(':date',      $date);
-		$statement->bindParam(':time',      $time);
-		$statement->bindParam(':ip',        $ip);
-		$statement->bindParam(':level',     $level);
-		$statement->bindParam(':message',   $message);
-		$statement->bindParam(':context',   $cnt);
-		$statement->execute();
-	}
 }

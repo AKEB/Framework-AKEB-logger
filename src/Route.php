@@ -3,12 +3,11 @@ namespace AKEB\Logger;
 
 use DateTime;
 use Psr\Log\AbstractLogger;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class Route
  */
-abstract class Route extends AbstractLogger implements LoggerInterface {
+abstract class Route extends AbstractLogger {
 	/**
 	 * @var bool Включен ли роут
 	 */

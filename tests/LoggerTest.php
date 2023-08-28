@@ -8,14 +8,18 @@ error_reporting(E_ALL);
 
 class LoggerTest extends PHPUnit\Framework\TestCase {
 
-	function setUp() {
+	protected $dirname;
+	protected $dir;
+	protected $logger;
+
+	protected function setUp(): void {
 		$this->logger = new Logger();
 		$this->dirname = 'tests/tmp';
 		@mkdir($this->dirname);
 		$this->dir = dir($this->dirname);
 	}
 
-	function tearDown() {
+	protected function tearDown(): void {
 		$this->logger = null;
 		while (false !== ($entry = $this->dir->read())) {
 			if ($entry == '.' || $entry == '..') continue;
