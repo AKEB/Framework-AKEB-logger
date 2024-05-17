@@ -14,7 +14,7 @@ Composer config
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/AKEB/Logger"
+            "url": "https://github.com/AKEB/Framework-AKEB-logger"
         }
     ]
 }

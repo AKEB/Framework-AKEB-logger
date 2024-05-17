@@ -16,9 +16,9 @@
 	"name": "akeb/logger",
 	"support": {
 		"email": "vadim.babadzhanyan@my.games",
-		"issues": "https://github.com/AKEB/Logger/issues",
-		"wiki": "https://github.com/AKEB/Logger/wiki",
-		"source": "https://github.com/AKEB/Logger"
+		"issues": "https://github.com/AKEB/Framework-AKEB-logger/issues",
+		"wiki": "https://github.com/AKEB/Framework-AKEB-logger/wiki",
+		"source": "https://github.com/AKEB/Framework-AKEB-logger"
 	},
 	"type": "library",
 	"require": {
@@ -26,7 +26,7 @@
 		"psr/log": "@stable"
 	},
 	"require-dev": {
-		"phpunit/phpunit": ">=4"
+		"phpunit/phpunit": "@stable"
 	},
 	"repositories": [
 	]
