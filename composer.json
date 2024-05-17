@@ -1,7 +1,7 @@
 {
 	"authors": [
 		{
-			"email": "vadim.babadzhanyan@my.games",
+			"email": "vadimakeb@gmail.com",
 			"name": "Vadim Babadzhanyan",
 			"role": "Lead"
 		}
@@ -15,7 +15,7 @@
 	"license": "Apache-2.0",
 	"name": "akeb/logger",
 	"support": {
-		"email": "vadim.babadzhanyan@my.games",
+		"email": "vadimakeb@gmail.com",
 		"issues": "https://github.com/AKEB/Framework-AKEB-logger/issues",
 		"wiki": "https://github.com/AKEB/Framework-AKEB-logger/wiki",
 		"source": "https://github.com/AKEB/Framework-AKEB-logger"

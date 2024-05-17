@@ -9,7 +9,7 @@ Composer config
 ```json
 {
     "require": {
-        "akeb/logger": "^1.2.0"
+        "akeb/logger": "^1.2.2"
     },
     "repositories": [
         {
